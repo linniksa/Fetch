@@ -447,9 +447,12 @@ class Message
                 if (!isset($set))
                     $set = true;
 
-                $outputString .= isset($address['name']) ?
-                    $address['name'] . ' <' . $address['address'] . '>'
-                    : $address['address'];
+                $val = '<' . $address['address'] . '>';
+                if (isset($address['name'])) {
+                    $val = '"' . preg_replace('/\W/u', '\\\\$0', $address['name']) . '" ' . $val;
+                }
+
+                $outputString .= $val;
             }
 
             return $outputString;
