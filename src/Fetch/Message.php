@@ -448,7 +448,7 @@ class Message
                     $set = true;
 
                 $outputString .= isset($address['name']) ?
-                    $address['name'] . ' <' . $address['address'] . '>'
+                    sprintf('"%s" <%s>', $address['name'], $address['address'])
                     : $address['address'];
             }
 
