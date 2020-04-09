@@ -298,4 +298,64 @@ ENCODE;
 
     }
 
+    /**
+     * @dataProvider dataEmailAttachedToEmailProvider
+     * @param $uid
+     * @param $emailBodyPartString
+     * @param $isMultipart
+     */
+    public function testEmailAttachedToEmail($uid, $emailBodyPartString, $isMultipart)
+    {
+        $server = ServerTest::getServer();
+        $this->assertGreaterThanOrEqual($uid, $server->numMessages('UndeliveredTests'));
+        $server->setMailbox('UndeliveredTests');
+
+        $message = new Message($uid, $server);
+
+        $this->assertContains($emailBodyPartString, $message->getMessageBody(true));
+        if ($isMultipart) {
+            $this->assertNotEmpty($message->getAttachments());
+        }
+    }
+
+    public function dataEmailAttachedToEmailProvider()
+    {
+        return [
+            [
+                1,
+                'Sorry, we were unable to deliver your message to the following address.',
+                false,
+            ],
+            [
+                2,
+                'Сообщение не доставлено, так как адрес',
+                true,
+            ],
+            [
+                3,
+                'This is the mail system at host yandex.ru.',
+                true,
+            ],
+            [
+                4,
+                'Это письмо создано автоматически сервером Mail.ru, отвечать на него не нужно.',
+                false,
+            ],
+            [
+                5,
+                'которое Вы отправили, не может быть доставлено одному или',
+                true,
+            ],
+            [
+                6,
+                'Тестирование прикрепленного письма',
+                true,
+            ],
+            [
+                7,
+                'This is the mail system at host yandex.ru.',
+                true,
+            ]
+        ];
+    }
 }

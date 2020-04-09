@@ -12,14 +12,20 @@
     }
   ],
   "require": {
-    "php": ">=5.3.0",
+    "php": ">=5.6",
     "ext-imap": "*"
   },
   "require-dev": {
-    "tedivm/dovecottesting": "1.2.3",
-    "phpunit/phpunit": "4.2.*",
-    "fabpot/php-cs-fixer": "0.5.*"
+    "tedivm/dovecottesting": "dev-master@dev",
+    "phpunit/phpunit": "^5.7",
+    "friendsofphp/php-cs-fixer": "^2"
     },
+  "repositories": [
+    {
+      "type": "git",
+      "url": "https://github.com/pm14kas/DovecotTesting"
+    }
+  ],
   "autoload": {
     "psr-0": {"Fetch": "src/"}
   }
